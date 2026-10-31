@@ -89,14 +89,6 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- copilot configuration
-vim.g.copilot_filetypes = {
-  text = false,
-  xml = false,
-  json = false,
-  markdown = false,
-}
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
@@ -173,7 +165,8 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- Font configuration
-vim.o.guifont = 'Jetbrains Mono,Source Han Sans SC'
+vim.o.guifont = 'Fira Code Retina,Source Han Sans SC'
+vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -220,6 +213,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+-- remember the last cursor position of a file
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+  group = vim.api.nvim_create_augroup('last-cursor-position', { clear = false }),
+  desc = 'Remember and return the cursor to where it was when closing a buffer',
+  pattern = '*',
+  command = 'silent! normal! g`"zv',
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
